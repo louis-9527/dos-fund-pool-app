@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "monorepo": true,
+  "root": "apps/fund-pool-api",
+  "sourceRoot": "apps/fund-pool-api/src",
+  "compilerOptions": {
+    "deleteOutDir": true,
+    "webpack": false
+  },
+  "projects": {
+    "fund-pool-api": {
+      "type": "application",
+      "root": "apps/fund-pool-api",
+      "entryFile": "main",
+      "sourceRoot": "apps/fund-pool-api/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/fund-pool-api/tsconfig.app.json"
+      }
+    }
+  }
+}
