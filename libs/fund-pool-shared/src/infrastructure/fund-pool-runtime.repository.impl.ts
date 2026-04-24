@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { IFundPoolRuntimeRepository } from '../domain/fund-pool-runtime.repository';
+import { IFundPoolRuntimeRepository, AdjustBalanceResult } from '../domain/fund-pool-runtime.repository';
 import { FundPoolRuntimeEntity } from '../domain/fund-pool-runtime.entity';
 import { FundPoolRuntime, FundPoolRuntimeDocument } from './fund-pool-runtime.schema';
 
@@ -26,6 +26,27 @@ export class FundPoolRuntimeRepositoryImpl implements IFundPoolRuntimeRepository
     await this.model
       .updateOne({ poolId }, { $set: { currentBalance: newBalance, lastChangeAt } })
       .exec();
+  }
+
+  async adjustBalance(poolId: string, deltaAmount: number, lastChangeAt: Date): Promise<AdjustBalanceResult | null> {
+    const beforeDoc = await this.model
+      .findOneAndUpdate(
+        { poolId },
+        {
+          $inc: { currentBalance: deltaAmount, totalManualAdjustAmount: deltaAmount },
+          $set: { lastChangeAt },
+        },
+      )
+      .lean()
+      .exec();
+
+    if (!beforeDoc) return null;
+
+    const balanceBefore = beforeDoc.currentBalance != null ? Number(beforeDoc.currentBalance.toString()) : 0;
+    return {
+      balanceBefore,
+      balanceAfter: balanceBefore + deltaAmount,
+    };
   }
 
   private toDomain(doc: any): FundPoolRuntimeEntity {
