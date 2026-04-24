@@ -22,6 +22,12 @@ export class FundPoolRuntimeRepositoryImpl implements IFundPoolRuntimeRepository
     return docs.map((doc) => this.toDomain(doc));
   }
 
+  async updateBalance(poolId: string, newBalance: number, lastChangeAt: Date): Promise<void> {
+    await this.model
+      .updateOne({ poolId }, { $set: { currentBalance: newBalance, lastChangeAt } })
+      .exec();
+  }
+
   private toDomain(doc: any): FundPoolRuntimeEntity {
     return new FundPoolRuntimeEntity({
       id: doc._id.toString(),

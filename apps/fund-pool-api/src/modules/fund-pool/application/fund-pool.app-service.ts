@@ -1,8 +1,6 @@
 import { Injectable, Inject, Logger } from '@nestjs/common';
-import { IFundPoolConfigRepository } from '../domain/fund-pool-config.repository';
-import { IFundPoolRuntimeRepository } from '../domain/fund-pool-runtime.repository';
+import { IFundPoolConfigRepository, IFundPoolRuntimeRepository, BusinessException, BusinessErrorCode } from '@app/fund-pool-shared';
 import { FundPoolDomainService, PoolSnapshot } from '../domain/fund-pool.domain-service';
-import { BusinessException, BusinessErrorCode } from '../../../common/exceptions/business.exception';
 import { GetPoolListQuery } from './queries/get-pool-list.query';
 
 export interface PoolListResult {

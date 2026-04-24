@@ -17,6 +17,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/fund-pool-api/tsconfig.app.json"
       }
+    },
+    "fund-pool-shared": {
+      "type": "library",
+      "root": "libs/fund-pool-shared",
+      "entryFile": "index",
+      "sourceRoot": "libs/fund-pool-shared/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/fund-pool-shared/tsconfig.lib.json"
+      }
     }
   }
 }

@@ -17,6 +17,11 @@ export class FundPoolConfigRepositoryImpl implements IFundPoolConfigRepository {
     return docs.map((doc) => this.toDomain(doc));
   }
 
+  async findByPoolId(poolId: string): Promise<FundPoolConfigEntity | null> {
+    const doc = await this.model.findOne({ poolId }).lean().exec();
+    return doc ? this.toDomain(doc) : null;
+  }
+
   private toDomain(doc: any): FundPoolConfigEntity {
     return new FundPoolConfigEntity({
       id: doc._id.toString(),

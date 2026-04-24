@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { FundPoolConfigEntity, LevelConfig } from './fund-pool-config.entity';
-import { FundPoolRuntimeEntity } from './fund-pool-runtime.entity';
+import { FundPoolConfigEntity, LevelConfig, FundPoolRuntimeEntity } from '@app/fund-pool-shared';
 
 export interface PoolSnapshot {
   poolId: string;

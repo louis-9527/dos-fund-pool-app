@@ -16,6 +16,10 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@app/fund-pool-shared": ["libs/fund-pool-shared/src"],
+      "@app/fund-pool-shared/*": ["libs/fund-pool-shared/src/*"]
+    }
   }
 }

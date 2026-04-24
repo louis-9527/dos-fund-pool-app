@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, BadRequestException, Logger } from '@nestjs/common';
 import { Response } from 'express';
-import { BusinessErrorCode, BusinessException } from '../exceptions/business.exception';
+import { BusinessErrorCode, BusinessException } from '@app/fund-pool-shared';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
