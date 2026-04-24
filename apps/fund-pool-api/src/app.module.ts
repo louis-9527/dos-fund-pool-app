@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FundPoolModule } from './modules/fund-pool/fund-pool.module';
+import { VaultFetcher, VaultModule } from '@app/fund-pool-shared';
 import appConfig from './config/app.config';
 
 @Module({
@@ -10,10 +11,12 @@ import appConfig from './config/app.config';
       isGlobal: true,
       load: [appConfig],
     }),
+    VaultModule,
     MongooseModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
-        uri: config.get<string>('app.mongoUri'),
+      imports: [VaultModule],
+      inject: [VaultFetcher],
+      useFactory: async (vaultFetcher: VaultFetcher) => ({
+        uri: await vaultFetcher.getSecret('commonConfig', 'MONGODB_URI'),
       }),
     }),
     FundPoolModule,

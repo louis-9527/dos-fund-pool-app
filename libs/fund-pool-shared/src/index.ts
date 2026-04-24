@@ -2,7 +2,8 @@
 export * from './fund-pool-shared.module';
 
 // Config
-export * from './config/vault';
+export * from './config/vault-fetcher';
+export * from './config/vault.module';
 
 // Exceptions
 export * from './exceptions/business.exception';
