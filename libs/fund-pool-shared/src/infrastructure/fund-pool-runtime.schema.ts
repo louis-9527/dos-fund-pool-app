@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 
 export type FundPoolRuntimeDocument = HydratedDocument<FundPoolRuntime>;
 
@@ -11,14 +11,14 @@ export class FundPoolRuntime {
   @Prop({ type: Number, default: 0 })
   currentBalance: number;
 
-  @Prop({ type: Number, default: 0 })
-  totalInflowAmount: number;
+  @Prop({ type: MongooseSchema.Types.Decimal128 })
+  totalInflowAmount: MongooseSchema.Types.Decimal128;
 
-  @Prop({ type: Number, default: 0 })
-  totalOutflowAmount: number;
+  @Prop({ type: MongooseSchema.Types.Decimal128 })
+  totalOutflowAmount: MongooseSchema.Types.Decimal128;
 
-  @Prop({ type: Number, default: 0 })
-  totalManualAdjustAmount: number;
+  @Prop({ type: MongooseSchema.Types.Decimal128 })
+  totalManualAdjustAmount: MongooseSchema.Types.Decimal128;
 
   @Prop()
   lastChangeAt: Date;

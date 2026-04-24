@@ -12,7 +12,7 @@ import appConfig from './config/app.config';
     }),
     MongooseModule.forRootAsync({
       useFactory: () => ({
-        uri: process.env.MONGODB_URI ?? 'mongodb://localhost:27017/dosFundPoolDB',
+        uri: process.env.MONGODB_URI ?? '',
       }),
     }),
     FundPoolModule,
