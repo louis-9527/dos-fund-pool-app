@@ -1,6 +1,9 @@
 // Module
 export * from './fund-pool-shared.module';
 
+// Config
+export * from './config/vault';
+
 // Exceptions
 export * from './exceptions/business.exception';
 

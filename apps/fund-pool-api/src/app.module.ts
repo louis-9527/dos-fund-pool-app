@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FundPoolModule } from './modules/fund-pool/fund-pool.module';
 import appConfig from './config/app.config';
@@ -11,8 +11,9 @@ import appConfig from './config/app.config';
       load: [appConfig],
     }),
     MongooseModule.forRootAsync({
-      useFactory: () => ({
-        uri: process.env.MONGODB_URI ?? '',
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        uri: config.get<string>('app.mongoUri'),
       }),
     }),
     FundPoolModule,
