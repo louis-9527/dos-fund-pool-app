@@ -73,12 +73,12 @@ export class FundPoolAppService {
     return { gameId: query.gameId, pools };
   }
 
-  async increaseBalance(command: AdjustBalanceCommand): Promise<void> {
-    await this.doAdjustBalance(command.poolId, command.amount, 'manualAdd', command.operatorId, command.remark);
+  async increaseBalance(command: AdjustBalanceCommand): Promise<{ currentBalance: number }> {
+    return this.doAdjustBalance(command.poolId, command.amount, 'manualAdd', command.operatorId, command.remark);
   }
 
-  async decreaseBalance(command: AdjustBalanceCommand): Promise<void> {
-    await this.doAdjustBalance(command.poolId, -command.amount, 'manualReduce', command.operatorId, command.remark);
+  async decreaseBalance(command: AdjustBalanceCommand): Promise<{ currentBalance: number }> {
+    return this.doAdjustBalance(command.poolId, -command.amount, 'manualReduce', command.operatorId, command.remark);
   }
 
   private async doAdjustBalance(
@@ -87,7 +87,7 @@ export class FundPoolAppService {
     changeType: ChangeType,
     operatorId: string,
     remark: string,
-  ): Promise<void> {
+  ): Promise<{ currentBalance: number }> {
     const now = new Date();
     const result = await this.runtimeRepo.adjustBalance(poolId, deltaAmount, now);
 
@@ -110,6 +110,8 @@ export class FundPoolAppService {
       remark,
       occurredAt: now,
     });
+
+    return { currentBalance: result.balanceAfter };
   }
 
   async createScheduledInjection(command: ScheduledInjectionCommand): Promise<{ id: string }> {

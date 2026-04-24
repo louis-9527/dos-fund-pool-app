@@ -16,8 +16,8 @@ export class FundPoolController {
   }
 
   @Post('increaseBalance')
-  async increaseBalance(@Body() dto: AdjustBalanceDto): Promise<void> {
-    await this.fundPoolAppService.increaseBalance({
+  async increaseBalance(@Body() dto: AdjustBalanceDto): Promise<{ currentBalance: number }> {
+    return this.fundPoolAppService.increaseBalance({
       poolId: dto.poolId,
       amount: dto.amount,
       operatorId: dto.operatorId ?? '',
@@ -26,8 +26,8 @@ export class FundPoolController {
   }
 
   @Post('decreaseBalance')
-  async decreaseBalance(@Body() dto: AdjustBalanceDto): Promise<void> {
-    await this.fundPoolAppService.decreaseBalance({
+  async decreaseBalance(@Body() dto: AdjustBalanceDto): Promise<{ currentBalance: number }> {
+    return this.fundPoolAppService.decreaseBalance({
       poolId: dto.poolId,
       amount: dto.amount,
       operatorId: dto.operatorId ?? '',
